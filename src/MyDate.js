@@ -10,4 +10,8 @@ export default class MyDate {
             title: this.title,
         })
     }
+
+    dateWithSlug() {
+        return this.date + '__';
+    }
 }
