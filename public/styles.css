@@ -1,0 +1,10 @@
+.container {
+    margin: 0 auto;
+    background-color: rgb(165, 101, 42);
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color:antiquewhite;
+}
