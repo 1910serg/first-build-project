@@ -1,6 +1,7 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 var config = {
   entry: {
@@ -16,6 +17,9 @@ var config = {
       template: './public/index.html',
     }),
     new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+    }),
   ],
   optimization: {
     splitChunks: {
@@ -29,7 +33,7 @@ var config = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.(svg|jpeg|png|gif)$/,
@@ -42,12 +46,22 @@ var config = {
 module.exports = (env, argv) => {
   if (argv.mode === 'development') {
     config.output.filename = '[name].[hash].js';
-    console.log('@@@ DEVELOPMENT IS STARTING @@@');
+
+    console.log(`
+    _______________________________
+    @@@ DEVELOPMENT IS STARTING @@@
+    -------------------------------
+    `);
   }
 
   if (argv.mode === 'production') {
     config.output.filename = '[name].[contenthash].js';
-    console.log('@@@ PRODUCTION IS STARTING @@@');
+
+    console.log(`
+    _______________________________
+    @@@ PRODUCTION IS STARTING @@@
+    -------------------------------
+    `);
   }
 
   return config;
