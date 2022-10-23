@@ -26,7 +26,7 @@ const cssLoaders = (additionalLoader) => {
 
 var config = {
   entry: {
-    main: './src/index.js',
+    main: ['@babel/polyfill', './src/index.js'],
     supporterscript: './src/SupporterScript.js',
   },
   output: {
@@ -61,6 +61,16 @@ var config = {
       {
         test: /\.(svg|jpeg|png|gif)$/,
         use: ['file-loader'],
+      },
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
+        },
       },
     ],
   },
