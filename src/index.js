@@ -1,4 +1,5 @@
 import '../public/styles.css';
+import '../public/index.scss';
 
 import WebpackIcon from './assets/webpack-icon.svg';
 import MyDate from './MyDate.js';

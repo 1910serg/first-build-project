@@ -5,6 +5,25 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 
+const cssLoaders = (additionalLoader) => {
+  const loaders = [
+    {
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        hmr: null,
+        reloadAll: true,
+      },
+    },
+    'css-loader',
+  ];
+
+  if (additionalLoader) {
+    loaders.push(additionalLoader);
+  }
+
+  return loaders;
+};
+
 var config = {
   entry: {
     main: './src/index.js',
@@ -33,20 +52,11 @@ var config = {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: null,
-              reloadAll: true,
-            },
-          },
-          'css-loader',
-        ],
+        use: cssLoaders(),
       },
       {
-        test: /\.(svg|jpeg|png|gif)$/,
-        use: ['file-loader'],
+        test: /\.s[ac]ss$/,
+        use: cssLoaders('sass-loader'),
       },
       {
         test: /\.(svg|jpeg|png|gif)$/,
@@ -60,6 +70,7 @@ module.exports = (env, argv) => {
   if (argv.mode === 'development') {
     config.output.filename = '[name].[hash].js';
     config.module.rules[0].use[0].options.hmr = true;
+    config.module.rules[1].use[0].options.hmr = true;
     config.devServer.hot = true;
     config.plugins.push(
       new HTMLWebpackPlugin({
@@ -84,6 +95,7 @@ module.exports = (env, argv) => {
     ]),
       (config.output.filename = '[name].[contenthash].js');
     config.module.rules[0].use[0].options.hmr = false;
+    config.module.rules[1].use[0].options.hmr = false;
     config.devServer.hot = false;
     config.plugins.push(
       new HTMLWebpackPlugin({
