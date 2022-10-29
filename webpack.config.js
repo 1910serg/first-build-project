@@ -39,7 +39,7 @@ const getBabelOptions = (preset, plugin) => {
 
 var config = {
   entry: {
-    main: ['@babel/polyfill', './src/index.js'],
+    main: ['@babel/polyfill', './src/index.jsx'],
     supporterscript: './src/SupporterScript.ts',
   },
   output: {
