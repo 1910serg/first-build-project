@@ -24,10 +24,23 @@ const cssLoaders = (additionalLoader) => {
   return loaders;
 };
 
+const getBabelOptions = (preset, plugin) => {
+  const allPresets = ['@babel/preset-env'];
+  const allPlugins = ['@babel/plugin-proposal-class-properties'];
+
+  if (preset) allPresets.push(preset);
+  if (plugin) allPlugins.push(plugin);
+
+  return {
+    presets: allPresets,
+    plugins: allPlugins,
+  };
+};
+
 var config = {
   entry: {
     main: ['@babel/polyfill', './src/index.js'],
-    supporterscript: './src/SupporterScript.js',
+    supporterscript: './src/SupporterScript.ts',
   },
   output: {
     filename: null,
@@ -67,10 +80,23 @@ var config = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-class-properties'],
-          },
+          options: getBabelOptions(),
+        },
+      },
+      {
+        test: /\.m?ts$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: getBabelOptions('@babel/preset-typescript'),
+        },
+      },
+      {
+        test: /\.m?jsx$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: getBabelOptions('@babel/preset-react'),
         },
       },
     ],
