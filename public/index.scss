@@ -6,3 +6,18 @@
     text-align: center;
   }
 }
+
+.container_greetings {
+  text-align: center;
+}
+
+.counterContainer {
+  margin: 10px 0;
+
+  button {
+    background-color: rgb(84, 111, 161);
+    border: 1px solid;
+    margin: 0 6px;
+    color: rgb(255, 255, 255);
+  }
+}

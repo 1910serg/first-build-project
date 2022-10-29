@@ -61,6 +61,9 @@ var config = {
     port: 8000,
     hot: null,
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   module: {
     rules: [
       {
